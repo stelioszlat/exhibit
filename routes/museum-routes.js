@@ -1,18 +1,11 @@
 const express = require('express');
-
 const router = express.Router();
+const Museum = require('../models/Museum');
 
-const museums = {
-    museum1 : {
-        name: "museum1"
-    },
-    museum2 : {
-        name: "museum2"
-    }
-}
+const museumRoutes = require('../controllers/museum-controller');
 
-router.get('', (req, res, next) => {
-    res.status(200).json({museums});
-})
+router.get('/', museumRoutes.getMuseums);
+
+router.get('/museum/:mid', museumRoutes.getMuseum);
 
 module.exports = router;

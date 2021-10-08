@@ -9,7 +9,7 @@ exports.getExhibits = async (req, res, next) => {
         res.status(400).json({result});
     }
     catch (err) {
-        return next(err);
+        res.status(500).json(err);
     }
 };
 
@@ -23,6 +23,6 @@ exports.getExhibit = async (req, res, next) => {
         res.status(400).json({message: 'could not find exhibit'});
     }
     catch (err) {
-        return next(err);
+        res.status(500).json(err);
     }
 };

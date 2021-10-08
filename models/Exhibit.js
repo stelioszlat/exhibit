@@ -10,7 +10,7 @@ const exhibitSchema = mongoose.Schema({
     created: {type: Date},
     creator: {type: String},
     value: {type: Number}
-});
+}, {collection: 'exhibits'});
 
 const exhibitModelTypes = {
     name : "String",

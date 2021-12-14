@@ -1,25 +1,36 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const cors = require('cors');
 
-const { connect } = require('./db/connect');
+const { connect } = require('./src/db/connect');
+const config = require('./config.json');
+const logger = require('./src/util/logger');
+const apiLogger = require('./src/util/api-logger');
+const error = require('./src/shared/error');
 
-const exhibitRoutes = require('./routes/exhibit-routes');
-const sectionRoutes = require('./routes/section-routes');
-const museumRoutes = require('./routes/museum-routes');
-const adminRoutes = require('./routes/admin-routes');
-const errorRoutes = require('./routes/error-routes');
+const host = config.host;
+const port = config.port;
+
+const exhibitRoutes = require('./src/routes/exhibit-routes');
+const sectionRoutes = require('./src/routes/section-routes');
+const museumRoutes = require('./src/routes/museum-routes');
+const adminRoutes = require('./src/routes/admin-routes');
 
 const app = express();
-app.use(bodyParser.urlencoded({ extended: false}));
+app.use(apiLogger);
+app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'static')));
 
+app.use(cors());
 app.use('/exhibits', exhibitRoutes);
 app.use('/sections', sectionRoutes);
 app.use('/museums', museumRoutes);
 app.use('/admin', adminRoutes);
-app.use(errorRoutes);
+app.use(error.errorHandler);
 
-connect('mongodb://localhost:27017/metadata');
-app.listen(8080);
+connect(config.db);
+app.listen(port, host, () => {
+    console.log(`Server started at http://${host}:${port}`);
+});
 

@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
+const logger = require('../util/logger');
 
 exports.connect = async function connect(uri, options, next){
-    console.log("Establishing connection...");
     try {
-        await mongoose.connect(
+        const connection = await mongoose.connect(
             uri,
             {   
                 ...options,
@@ -11,10 +11,9 @@ exports.connect = async function connect(uri, options, next){
                 useUnifiedTopology: true,
             }
         );
-        console.log("Connected to database");
-    }
-    catch (err){
-        console.log({error: err});
+        return connection;
+    } catch (err){
+        // logger.error({error: err});
         next(err);
     }
 }

@@ -6,6 +6,6 @@ const museumRoutes = require('../controllers/museum-controller');
 
 router.get('/', museumRoutes.getMuseums);
 
-router.get('/museum/:mid', museumRoutes.getMuseum);
+router.get('/museum/:mid', museumRoutes.getMuseumById);
 
 module.exports = router;

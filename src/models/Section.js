@@ -8,7 +8,7 @@ const sectionSchema = mongoose.Schema({
     exhibits: [
         {type: String}
     ]
-}, {collection: 'sections'});
+}, {collection: 'sections', timestamps: true});
 
 const sectionModelTypes = {
     name : "String",

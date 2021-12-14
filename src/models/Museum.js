@@ -16,7 +16,7 @@ const museumSchema = mongoose.Schema({
         {type: String}
     ],
     isOpen: {type: Boolean}
-}, {collection: 'museums'});
+}, {collection: 'museums', timestamps: true});
 
 const museumModelTypes = {
     name: "String",

@@ -2,14 +2,35 @@ const { body, validationResult} = require('express-validator');
 const Exhibit = require('../models/Exhibit');
 const error = require('../shared/error');
 
-exports.validateName = value => {}
+const validators = [];
 
-exports.validateDescription = value => {}
+validators.push(validateName = (req, res, next) => {
+    body('name').notEmpty().isLength({max: 20}).isAlphanumeric();
+    next();
+});
 
-exports.validateImageLocation = value => {}
+validators.push(validateDescription = (req, res, next) => {
+    body('description').isLength({max: 200}).isString();
+    next();
+})
 
-exports.validateSoundLocation = value => {}
+validators.push(validateImageLocation = (req, res, next) => {
+    body('image').isURL();
+    next();
+});
 
-exports.validateValue = value => {}
+validators.push(validateSoundLocation = (req, res, next) => {
+    body('sound').isURL();
+    next();
+});
 
-exports.validateImageLocation = value => {}
+validators.push(validate = (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        console.log('errors in validation');
+        next(error.throwError("Exhibit is not valid.", 422, errors.array()));
+    }
+    next();
+});
+
+module.exports = validators;

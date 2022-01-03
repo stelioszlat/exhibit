@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const logger = require('../util/logger');
+const error = require('../shared/error');
 
 exports.connect = async function connect(uri, options, next){
     try {
@@ -14,6 +15,7 @@ exports.connect = async function connect(uri, options, next){
         return connection;
     } catch (err){
         // logger.error({error: err});
-        next(err);
+        // error.errorHandler(err);
+        console.log(err);
     }
 }

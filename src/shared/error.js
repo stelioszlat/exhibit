@@ -2,7 +2,7 @@
 exports.throwError = (message, errorCode, errors=[]) => {
     const error = new Error(message);
     error.statusCode = errorCode;
-    error.data = errors.array();
+    error.data = errors
     throw error;
 }
 

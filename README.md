@@ -3,7 +3,9 @@
 
 - create a config.json file with the following format
 
-` {
+``` {
   "db": "<mongodb-host>",
   ...
-}`
+}```
+
+- run `npm start`

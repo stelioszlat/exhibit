@@ -1,4 +1,4 @@
-const Section = require('../models/Section');
+const Category = require('../models/Category');
 
 exports.getSections = (req, res, next) => {
     res.status(200).send("<h4>sections: </h4><ul></ul>");

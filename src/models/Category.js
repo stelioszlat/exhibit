@@ -1,14 +1,13 @@
 const mongoose = require('mongoose');
 
-const sectionSchema = mongoose.Schema({
+const categorySchema = mongoose.Schema({
     name: {type: String},
     displayName: {type: String},
     description: {type: String},
-    location: {type: String},
     exhibits: [
         {type: String}
     ]
-}, {collection: 'sections', timestamps: true});
+}, {collection: 'categories', timestamps: true});
 
 const sectionModelTypes = {
     name : "String",
@@ -18,4 +17,4 @@ const sectionModelTypes = {
     exhibits: "List of Exhibits"
 }
 
-module.exports = mongoose.model('Section', sectionSchema);
+module.exports = mongoose.model('Category', categorySchema);

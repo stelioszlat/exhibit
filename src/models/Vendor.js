@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 
-const museumSchema = mongoose.Schema({
+const vendorSchema = mongoose.Schema({
     name: {type: String},
     address: {type: String},
     phones: [
@@ -14,9 +14,8 @@ const museumSchema = mongoose.Schema({
     closeHour: {type: Number},
     daysOpen: [
         {type: String}
-    ],
-    isOpen: {type: Boolean}
-}, {collection: 'museums', timestamps: true});
+    ]
+}, {collection: 'vendors', timestamps: true});
 
 const museumModelTypes = {
     name: "String",
@@ -26,8 +25,7 @@ const museumModelTypes = {
     exhibits: "List of Strings",
     openHour: "Integer",
     closeHour: "Integer",
-    daysOpen: "List of Strings",
-    isOpen: "Boolean"
+    daysOpen: "List of Strings"
 }
 
-module.exports = mongoose.model("Museum", museumSchema);
+module.exports = mongoose.model("Vendor", vendorSchema);

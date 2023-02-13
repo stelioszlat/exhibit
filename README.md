@@ -1,14 +1,16 @@
 # exhibIt
-a platform for exhibitions, one-time catalog sharing and virtual assistance in galleries and museums
+A platform for exhibitions, one-time catalog sharing and inventory management
 
 
-- create a config.json file with the following format
+- create a .env file with the following format
 
 ``` 
-{
-  "db": "<mongodb-host>",
-  ...
-}
+HOST: <host>
+PORT: <port>
+DB_HOST: <mongo_db_host>
 ```
-
+- run `npm run doc` to generate swagger configuration
 - run `npm start`
+
+
+Docs: <host>:<port>/api-docs

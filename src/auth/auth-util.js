@@ -1,65 +1,10 @@
-const { connect } = require('mongoose');
-const { createClient } = require('redis');
-const morgan = require('morgan');
 const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/user-model');
 
 dotenv.config();
-const host = process.env.REDIS_HOST;
 const secret = process.env.SECRET;
-
-const client = createClient({
-    url: host
-});
-
-exports.connectDb = (uri, options) => {
-    connect(uri, {   
-        ...options,
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    }).then(value => {
-        console.log("Connected to database on " + uri);
-    }).catch(err => {
-        console.log({error: err});
-    });
-}
-
-exports.connectCache = async () => {
-    await client.connect().then(() => { 
-        console.log("Connected to cache on " + host) 
-    }).catch(err => {
-        console.log(err);
-    });
-}
-
-exports.getFromCache = async (key) => {
-    return await client.get(key).then(data => { return JSON.parse(data)});
-}
-
-exports.setToCache = async (key, value) => {
-    return await client.set(key, JSON.stringify(value));
-}
-
-exports.deleteFromCache = async (key) => {
-    return await client.del(key);
-}
-
-exports.getManyFromCache = async (pattern) => {
-    return await client.keys(pattern);
-}
-
-exports.apiLogger = morgan(function (tokens, req, res) {
-    return [
-        '[API]',
-        tokens.date(req, res),
-        tokens.method(req, res),
-        tokens.url(req, res),
-        tokens.status(req, res),
-        // tokens['response-time'](req, res), 'ms'
-    ].join(' ')
-});
 
 exports.userExists = async (req, res, next) => {
     // check if user exists

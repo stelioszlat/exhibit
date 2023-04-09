@@ -8,8 +8,8 @@ router.get('', (req, res, next) => {
     res.status(200).json({})
 });
 
-router.get('/:sid', (req, res, next) => {
-    const categoryId = req.params.cid;
+router.get('/:categoryId', (req, res, next) => {
+    const categoryId = req.params.categoryId;
 
     res.status(200).json({categoryId});
 })

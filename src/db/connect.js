@@ -12,6 +12,7 @@ exports.connect = async function connect(uri, options, next){
                 useUnifiedTopology: true,
             }
         );
+        console.log("Connected to databse: " + uri);
         return connection;
     } catch (err){
         // logger.error({error: err});

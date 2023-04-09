@@ -1,0 +1,491 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Exhibit",
+        "description": "",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "localhost:8080",
+    "basePath": "/api",
+    "tags": [
+        {
+            "name": "Catalog",
+            "description": "Endpoints for catalogs"
+        },
+        {
+            "name": "Category",
+            "description": "Endpoints for categories"
+        },
+        {
+            "name": "Exhibit",
+            "description": "Endpoints for exhibits"
+        },
+        {
+            "name": "Order",
+            "description": "Endpoints for orders"
+        },
+        {
+            "name": "User",
+            "description": "Endpoints for users"
+        },
+        {
+            "name": "Vendor",
+            "description": "Endpoints for vendors"
+        },
+        {
+            "name": "Admin",
+            "description": "Endpoints for admins"
+        },
+        {
+            "name": "Self",
+            "description": "Endpoints for the current user"
+        }
+    ],
+    "schemes": ["http"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "securityDefinitions": {
+        "Bearer": {
+            "type": "apiKey",
+            "scheme": "Bearer",
+            "name": "Authorization",
+            "in": "header",
+            "description": "Bearer token used for user authentication"
+        }
+    },
+    "security": [ { "Bearer": [] } ],
+    "paths": {
+        "/catalogs/{token}": {
+            "get": {
+                "summary": "Retrieve a catalog",
+                "tags": ["Self", "Catalog"],
+                "consumes": "application/json",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "path",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Catalog"
+                        }
+                    }
+                }
+            }
+        },
+        "/categories": {
+            "get": {
+                "summary": "Retrieve all categories",
+                "tags": ["Category"],
+                "consumes": "application/json",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Category"
+                            }
+                        }
+                    } 
+                }
+            }
+        },
+        "/categories/{categoryId}": {
+            "get": {
+                "summary": "Retrieve a category by id",
+                "tags": ["Category"],
+                "parameters": [
+                    {
+                        "name": "categoryId",
+                        "in": "path",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Category"
+                        }
+                    }
+                }
+            }
+        },
+        "/exhibits": {
+            "get": {
+                "summary": "Get exhibits (useless)",
+                "tags": ["Exhibit"],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Exhibit"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/exhibit": {
+            "post": {
+                "summary": "Create a new exhibit",
+                "tags": ["Exhibit"],
+                "parameters": [
+                    {
+                        "name": "Exbibit",
+                        "in": "body",
+                        "type": {
+                            "$ref": "#/definitions/Exhibit"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Exhibit"
+                        }
+                    }
+                }
+            }
+        },
+        "/exhibits/exhibit/{eid}": {
+            "get": {
+                "summary": "Retrieve an exhibit by its id",
+                "tags": ["Exhibit"],
+                "parameters": [
+                    {
+                        "name": "eid",
+                        "in": "path",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Exhibit"
+                        }
+                    } 
+                }
+            },
+            "update": {
+                "summary": "Update an exhibit by its id",
+                "tags": ["Exhibit"],
+                "parameters": [
+                    {
+                        "name": "eid",
+                        "in": "path",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Exhibit"
+                        }
+                    } 
+                }
+            },
+            "delete": {
+                "summary": "Delete an exhibit by its id",
+                "tags": ["Exhibit"],
+                "parameters": [
+                    {
+                        "name": "eid",
+                        "in": "path",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Exhibit"
+                        }
+                    } 
+                }
+            }
+        },
+        "/order": {
+            "post": {
+                "summary": "Create a new order",
+                "tags": ["Order"],
+                "parameters": [
+                    {
+                        "name": "order",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/Order"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Order"
+                        }
+                    }
+                }
+            }
+        },
+        "/order/{orderId}": {
+            "get": {
+                "summary": "Get an order by id",
+                "tags": ["Order"],
+                "parameters": [
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Order"
+                        }
+                    }
+                }
+            },
+            "update": {
+                "summary": "Update an order by id",
+                "tags": ["Order"],
+                "parameters": [
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Order"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete an order by id",
+                "tags": ["Order"],
+                "parameters": [
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Order"
+                        }
+                    }
+                }
+            }
+        },
+        "/vendors": {
+            "get": {
+                "summary": "Get all vendors",
+                "tags": ["Vendor"],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Vendor"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/vendors/{vid}": {
+            "get": {
+                "summary": "Get a vendor by id",
+                "tags": ["Vendor"],
+                "parameters": [
+                    {
+                        "name": "vid",
+                        "in": "path",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Vendor"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Catalog": {
+            "properties": {
+                "vendor": {
+                    "type": "string"
+                },
+                "version": {
+                    "type": "integer"
+                },
+                "categories": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "token": {
+                    "type": "string"
+                }
+            }
+        },
+        "Category": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "displayName": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "exhibits": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "Exhibit": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "displayName": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "sound": {
+                    "type": "string"
+                },
+                "arrived": {
+                    "type": "string"
+                },
+                "created": {
+                    "type": "string"
+                },
+                "creator": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "integer"
+                }
+            }
+        },
+        "Order": {
+            "properties": {
+                "created": {
+                    "type": "string"
+                },
+                "creator": {
+                    "type": "string"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "User": {
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "password"
+                },
+                "role": {
+                    "type": "string"
+                }
+            }  
+        },
+        "Vendor": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "address": {
+                    "type": "integer"
+                },
+                "phones": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "openHour": {
+                    "type": "integer"
+                },
+                "closeHour": {
+                    "type": "integer"
+                },
+                "daysOpen": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}

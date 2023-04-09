@@ -11,7 +11,7 @@ const logger = require('./src/util/logger');
 const apiLogger = require('./src/util/api-logger');
 const error = require('./src/shared/error');
 const fileStorage = require('./src/util/file-storage');
-const swaggerConfig = require('./swagger-output.json');
+const swaggerConfig = require('./swagger.json');
 
 dotenv.config();
 const host = process.env.HOST;
@@ -19,7 +19,8 @@ const port = process.env.PORT;
 
 const catalogRoutes = require('./src/routes/catalog-routes');
 const exhibitRoutes = require('./src/routes/exhibit-routes');
-const categoryRoutes = require('./src/routes/catalog-routes');
+const orderRoutes = require('./src/routes/order-routes');
+const categoryRoutes = require('./src/routes/category-routes');
 const vendorRoutes = require('./src/routes/vendor-routes');
 const userRoutes = require('./src/routes/user-routes');
 
@@ -35,6 +36,7 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use(cors());
 app.use('/api/catalogs', catalogRoutes);
 app.use('/api/exhibits', exhibitRoutes);
+app.use('/api/order', orderRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/vendors', vendorRoutes);
 app.use('/api/users', userRoutes);             // requires authentication

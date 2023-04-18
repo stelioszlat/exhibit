@@ -43,6 +43,10 @@
         {
             "name": "Self",
             "description": "Endpoints for the current user"
+        },
+        {
+            "name": "Setting",
+            "description": "Endpoints for user settings"
         }
     ],
     "schemes": ["http"],
@@ -59,16 +63,114 @@
     },
     "security": [ { "Bearer": [] } ],
     "paths": {
-        "/catalogs/{token}": {
+        "/catalogs": {
+            "get": {
+                "summary": "Retrieve all catalogs",
+                "tags": ["Admin", "Catalog"],
+                "consumes": "application/json",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Catalog"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create a new catalog",
+                "tags": ["Self", "Catalog"],
+                "consumes": "application/json",
+                "parameters": [
+                    {
+                        "name": "catalog",
+                        "in": "body",
+                        "type": {
+                            "$ref": "#/definitions/Catalog"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Catalog"
+                        }
+                    }
+                }
+            }
+        },
+        "/catalogs/vendor/{vendorId}": {
+            "get": {
+                "summary": "Retrieve all catalogs of a vendor",
+                "tags": ["Self", "Catalog"],
+                "consumes": "application/json",
+                "parameters": [
+                    {
+                        "name": "vendorId",
+                        "in": "path",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Catalog"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/catalogs/{categoryId}": {
             "get": {
                 "summary": "Retrieve a catalog",
                 "tags": ["Self", "Catalog"],
                 "consumes": "application/json",
                 "parameters": [
                     {
-                        "name": "token",
+                        "name": "categoryId",
                         "in": "path",
                         "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Catalog"
+                        }
+                    }
+                }
+            }
+        },
+        "/catalogs/{catalogId}": {
+            "update": {
+                "summary": "Update a catalog by id",
+                "tags": ["Self", "Admin", "Catalog"],
+                "consumes": "application/json",
+                "parameters": [
+                    {
+                        "name": "catalogId",
+                        "in": "path",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "catalog",
+                        "in": "body",
+                        "type": {
+                            "$ref": "#/definitions/Catalog"
+                        },
                         "required": true
                     }
                 ],
@@ -98,12 +200,85 @@
                         }
                     } 
                 }
+            },
+            "post": {
+                "summary": "Create a category",
+                "tags": ["Self", "Admin", "Category"],
+                "consumes": "application/json",
+                "parameters": [
+                    {
+                        "name": "category",
+                        "in": "body",
+                        "type": {
+                            "$ref": "#/definitions/Category"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Category"
+                        }
+                    }
+                }
             }
         },
         "/categories/{categoryId}": {
             "get": {
                 "summary": "Retrieve a category by id",
                 "tags": ["Category"],
+                "parameters": [
+                    {
+                        "name": "categoryId",
+                        "in": "path",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Category"
+                        }
+                    }
+                }
+            },
+            "update": {
+                "summary": "Update a category by id",
+                "tags": ["Self", "Admin", "Category"],
+                "consumes": "application/json",
+                "parameters": [
+                    {
+                        "name": "categoryId",
+                        "in": "path",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "category",
+                        "in": "body",
+                        "type": {
+                            "$ref": "#/definitions/Category"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Category"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete a category by id",
+                "tags": ["Self", "Admin", "Category"],
+                "consumes": "application/json",
                 "parameters": [
                     {
                         "name": "categoryId",
@@ -187,6 +362,7 @@
             "update": {
                 "summary": "Update an exhibit by its id",
                 "tags": ["Exhibit"],
+                "consumes": "application/json",
                 "parameters": [
                     {
                         "name": "eid",
@@ -210,6 +386,29 @@
                 "parameters": [
                     {
                         "name": "eid",
+                        "in": "path",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Exhibit"
+                        }
+                    } 
+                }
+            }
+        },
+        "/exhbits/vendor/{vendorId}": {
+            "get": {
+                "summary": "Retrieve exhibits by a vendor id",
+                "tags": ["Admin", "Exhibit"],
+                "consumes": "application/json",
+                "parameters": [
+                    {
+                        "name": "vendorId",
                         "in": "path",
                         "type": "string",
                         "required": true
@@ -273,6 +472,7 @@
             "update": {
                 "summary": "Update an order by id",
                 "tags": ["Order"],
+                "consumes": "application/json",
                 "parameters": [
                     {
                         "name": "orderId",
@@ -311,10 +511,225 @@
                 }
             }
         },
+        "/orders/{orderId}/link": {
+            "get": {
+                "summary": "Get an order link by order id",
+                "tags": ["Self", "Order"],
+                "parameters": [
+                    {
+                        "name": "orderId",
+                        "in": "path",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/settings/user/{userId}": {
+            "get": {
+                "summary": "Retrieve the settings of a user",
+                "tags": ["Self", "Admin", "Setting"],
+                "consumes": "application/json",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Setting"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create a user setting",
+                "tags": ["Self", "Admin", "Setting"],
+                "consumes": "application/json",
+                "parameters":  [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "setting",
+                        "in": "body",
+                        "type": {
+                            "$ref": "#/definitions/Setting"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Setting"
+                        }
+                    }
+                }
+            },
+            "update": {
+                "summary": "Update a user setting",
+                "tags": ["Self", "Admin", "Setting"],
+                "consumes": "application/json",
+                "parameters":  [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "setting",
+                        "in": "body",
+                        "type": {
+                            "$ref": "#/definitions/Setting"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Setting"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/all": {
+            "get": {
+                "summary": "Retriece all users",
+                "tags": ["Admin", "User"],
+                "consumes": "application/json",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/User"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users": {
+            "post": {
+                "summary": "Create a user",
+                "tags": ["Admin", "User"],
+                "consumes": "application/json",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "body",
+                        "type": {
+                            "$ref": "#/definitions/User"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{uid}": {
+            "get": {
+                "summary": "Retrieve a user by id",
+                "tags": ["Admin", "User"],
+                "consumes": "application/json",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                }
+            },
+            "update": {
+                "summary": "Update a user by id",
+                "tags": ["Admin", "User"],
+                "consumes": "application/json",
+                "parameters": [
+                    {
+                        "name": "uid",
+                        "in": "path",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "user",
+                        "in": "body",
+                        "type": {
+                            "$ref": "#/definitions/User"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete a user by id",
+                "tags": ["Admin", "User"],
+                "consumes": "application/json",
+                "parameters": [
+                    {
+                        "name": "uid",
+                        "in": "path",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/User"
+                        }
+                    }
+                }
+            }
+        },
         "/vendors": {
             "get": {
-                "summary": "Get all vendors",
+                "summary": "Retrieve all vendors",
                 "tags": ["Vendor"],
+                "consumes": "application/json",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -326,12 +741,80 @@
                         }
                     }
                 }
+            },
+            "post": {
+                "summary": "Create a vendor",
+                "tags": ["Admin", "Vendor"],
+                "consumes": "application/json",
+                "parameters": [
+                    {
+                        "name": "vendor",
+                        "in": "body",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Vendor"
+                        }
+                    }
+                }
             }
         },
-        "/vendors/{vid}": {
+        "/vendors/vendor/{vid}": {
             "get": {
-                "summary": "Get a vendor by id",
-                "tags": ["Vendor"],
+                "summary": "Retrieve a vendor by id",
+                "tags": ["Admin", "Vendor"],
+                "parameters": [
+                    {
+                        "name": "vid",
+                        "in": "path",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Vendor"
+                        }
+                    }
+                }
+            },
+            "update": {
+                "summary": "Update a vendor by id",
+                "tags": ["Admin", "Vendor"],
+                "consumes": "application/json",
+                "parameters": [
+                    {
+                        "name": "vid",
+                        "in": "path",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "name": "vendor",
+                        "in": "body",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Vendor"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete a vendor by id",
+                "tags": ["Admin", "Vendor"],
                 "parameters": [
                     {
                         "name": "vid",
@@ -484,6 +967,16 @@
                     "items": {
                         "type": "string"
                     }
+                }
+            }
+        },
+        "Setting": {
+            "properties": {
+                "propertyType": {
+                    "type": "string"
+                },
+                "propertyValue": {
+                    "type": "string"
                 }
             }
         }

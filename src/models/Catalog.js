@@ -1,15 +1,18 @@
 const mongoose = require('mongoose');
 
 const catalogSchema = mongoose.Schema({
-    vendor: { type: String },               // type vendor
+    name: { type: String },
+    vendor: { type: mongoose.Types.ObjectId, ref: 'Vendor' },               // type vendor
     version: { type: Number },
     categories: [
-        { type: String}
+        { type: mongoose.Types.ObjectId, ref: 'Category'}
     ],
     items: [
-        { type: String },                    // type exhibit
+        { type: mongoose.Types.ObjectId, ref: 'Exhibit'}
     ],
-    token: { type: String}
-})
+    tokens: [
+        { type: String }
+    ]
+}, {collection: 'catalogs', timestamps: true})
 
 module.exports = mongoose.model('Catalog', catalogSchema);

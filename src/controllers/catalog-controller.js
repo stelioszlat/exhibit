@@ -1,4 +1,5 @@
 const Catalog = require('../models/Catalog');
+const Vendor = require('../models/Vendor');
 
 const CATALOGS_PER_PAGE = 5;
 
@@ -66,4 +67,15 @@ exports.getCatalogsByVendor = async (req, res, next) => {
     } catch (err) {
         return next(err);
     }
+}
+
+exports.createCatalog = async (req, res, next) => {
+    
+    res.status(200).json('new catalog');
+}
+
+exports.updateCatalogById = async (req, res, next) => {
+    const catalogId = req.params.catalogId;
+
+    res.status(404).json('Could not find catalog');
 }

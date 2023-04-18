@@ -1,4 +1,6 @@
 const Exhibit = require('../models/Exhibit');
+const mongoose = require('mongoose');
+const Vendor = require('../models/Vendor');
 
 const ITEMS_PER_PAGE = 10;
 
@@ -9,7 +11,7 @@ exports.getExhibits = async (req, res, next) => {
         const countedExhibits = await Exhibit.countDocuments();
 
         if (countedExhibits === 0) {
-            return res.status(404).json({ message: 'Could not find exhibits' });
+            return res.status(200).json({ message: 'Could not find exhibits' });
         }
 
         const exhibits = await Exhibit.find()
@@ -18,8 +20,8 @@ exports.getExhibits = async (req, res, next) => {
         
         return res.status(200).json({
             exhibits,
-            hasNextPage: ITEMS_PER_PAGE * page < totalExhibits,
-            lastPage: Math.ceil(totalExhibits / ITEMS_PER_PAGE) 
+            hasNextPage: ITEMS_PER_PAGE * page < countedExhibits,
+            lastPage: Math.ceil(countedExhibits / ITEMS_PER_PAGE) 
         })
     } catch (err) {
         return next(err);
@@ -42,6 +44,23 @@ exports.getExhibitById = async (req, res, next) => {
         return next(err);
     }
 };
+
+exports.getExhibitsByVendorId = async (req, res, next) => {
+    const vendorId = req.params.vendorId;
+
+    try {
+        const vendor = await Vendor.findById(vendorId);
+
+        if (!vendor) {
+            return res.status(404).json({ message: 'Could not find vendor with id: ' + vendorId });
+        }
+
+        res.status(200).json({ exhibits: [] });
+    } catch (err) {
+        return next(err);
+    }
+
+}
 
 exports.addExhibit = async (req, res, next) => {
     const exhibit = req.body;

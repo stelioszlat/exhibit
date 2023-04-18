@@ -7,11 +7,9 @@ const exhibitSchema = mongoose.Schema({
     image: {type: String},
     sound: {type: String},
     arrived: {type: Date},
-    creator: {type: String},
+    creator: {type: mongoose.Types.ObjectId, ref: 'User'},
     value: {type: Number}
-}, {collection: 'exhibits',
-timestamps: true}
-);
+}, {collection: 'exhibits', timestamps: true});
 
 const exhibitModelTypes = {
     name : "String",

@@ -7,8 +7,8 @@ const vendorSchema = mongoose.Schema({
     phones: [
         {type: String}
     ],
-    sections: [
-        {type: String}
+    catalogs: [
+        {type: mongoose.Types.ObjectId, ref: 'Catalog'}
     ],
     openHour: {type: Number},
     closeHour: {type: Number},

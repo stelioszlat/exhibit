@@ -1,17 +1,14 @@
 const express = require('express');
 
+const categoryController = require('../controllers/category-controller');
 
 const router = express.Router();
 
 // /api/categories
-router.get('', (req, res, next) => {
-    res.status(200).json({})
-});
-
-router.get('/:categoryId', (req, res, next) => {
-    const categoryId = req.params.categoryId;
-
-    res.status(200).json({categoryId});
-})
+router.get('', categoryController.getCategories);
+router.post('', categoryController.createCategory);
+router.get('/:categoryId', categoryController.getCategoryById);
+router.put('/:categoryId', categoryController.updateCategoryById);
+router.delete('/:categoryId', categoryController.deleteCategoryById);
 
 module.exports = router;

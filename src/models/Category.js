@@ -5,7 +5,7 @@ const categorySchema = mongoose.Schema({
     displayName: {type: String},
     description: {type: String},
     exhibits: [
-        {type: String}
+        {type: mongoose.Types.ObjectId, ref: 'Exhibit'}
     ]
 }, {collection: 'categories', timestamps: true});
 

@@ -1,12 +1,11 @@
 const mongoose = require('mongoose');
 
 const orderSchema = mongoose.Schema({
-    created: {type: Date},
     creator: {type: String},
     items: [
-        { type: String },
+        { type: mongoose.Types.ObjectId, ref: 'Exhibit' },
     ],
-}, {collection: 'exhibits',
+}, {collection: 'orders',
 timestamps: true}
 );
 

@@ -17,6 +17,7 @@ dotenv.config();
 const host = process.env.HOST;
 const port = process.env.PORT;
 
+const authRoutes = require('./src/routes/auth-routes');
 const catalogRoutes = require('./src/routes/catalog-routes');
 const exhibitRoutes = require('./src/routes/exhibit-routes');
 const orderRoutes = require('./src/routes/order-routes');
@@ -34,6 +35,7 @@ app.use(multer({storage: fileStorage.imageStorage, fileFilter: fileStorage.image
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use(cors());
+app.use('/api/auth', authRoutes);
 app.use('/api/catalogs', catalogRoutes);
 app.use('/api/exhibits', exhibitRoutes);
 app.use('/api/order', orderRoutes);

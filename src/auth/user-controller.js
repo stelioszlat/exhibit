@@ -1,52 +1,31 @@
 const User = require('../models/User');
-
-const USERS_PER_PAGE = 10
+const mongoose = require('mongoose');
 
 exports.getUsers = async (req, res, next) => {
-    const page = +req.query.page || 1;
-    
+    // get all users
     try {
-        const countedUsers = await User.countDocuments();
+        const users = await User.find();
 
-        if (countedUsers === 0) {
-            return res.status(404).json({ message: 'Could not find users' });
+        if (!users) {
+            return res.status(409).json({ message: 'Could not find users.' });
         }
 
-        const users = await User.find()
-            .skip((page - 1) * USERS_PER_PAGE)
-            .limit(USERS_PER_PAGE);
-        
+        res.status(200).json({ users });
     
-        return res.status(200).json({
-            users,
-            hasNextPage: USERS_PER_PAGE * page < countedUsers,
-            lastPage: Math.ceil(countedUsers / USERS_PER_PAGE)
-        });
-    } catch(err) {
-        return next(err);
-    };
-};
-
-exports.getUserById = async (req, res, next) => {
-    const userId = req.params.uid;
-
-    try {
-        const user = await User.findById(userId);
-
-        if (!user) {
-            return res.status(404).json({ message: 'Could not find user' });
-        }
-
-        return res.status(200).json({ user });
     } catch (err) {
+        console.log(err);
         return next(err);
     }
-}
+};
 
-exports.addUser = async (req, res, next) => {
-    const { name, role, password, rePassword } = req.body;
+exports.createUser = async (req, res, next) => {
+    const { email, username, isAdmin, password, rePassword } = req.body;
 
-    if (!name) {
+    if (!email) {
+        return res.status(409).json({ message: 'You need to enter email'});
+    }
+
+    if (!username) {
         return res.status(409).json({ message: 'You need to enter username'});
     }
 
@@ -65,7 +44,8 @@ exports.addUser = async (req, res, next) => {
     try {
 
         const existingUser = await User.findOne({
-            name: name,
+            username: username,
+            email: email
         });
 
         if (existingUser) {
@@ -73,9 +53,10 @@ exports.addUser = async (req, res, next) => {
         }
 
         const apiToken = jwt.sign({
-            name: name,
+            username: username,
             password: password,
-            role: role
+            active: true,
+            isAdmin: isAdmin
         }, secret);
 
         const hashedPassword = await bcrypt.hash(password, 12);
@@ -92,8 +73,6 @@ exports.addUser = async (req, res, next) => {
         if (!result) {
             return res.status(409).json({ message: 'Could not create user.'});
         }
-
-        await util.setToCache(username, result);
         
         res.status(200).json({ user });
 
@@ -102,7 +81,26 @@ exports.addUser = async (req, res, next) => {
     }
 };
 
-exports.updateUser = async (req, res, next) => {
+exports.getUserById = async (req, res, next) => {
+    const userId = req.params.uid;
+
+    try {
+
+        const user = await User.findById(userId);
+
+        if (!user) {
+            res.status(404).json({ message: 'User does not exist' });
+        }
+
+        res.status(200).json({user});
+    
+    } catch (err) {
+        console.log(err);
+        return next(err);
+    }
+};
+
+exports.updateUserById = async (req, res, next) => {
     const userId = req.params.uid;
 
     try {
@@ -122,7 +120,7 @@ exports.updateUser = async (req, res, next) => {
     }
 };
 
-exports.deleteUser = async (req, res, next) => {
+exports.deleteUserById = async (req, res, next) => {
     const userId = req.params.uid;
 
     try {

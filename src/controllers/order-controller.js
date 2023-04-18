@@ -8,6 +8,10 @@ exports.getOrderById = async (req, res, next) => {
     const orderId = req.params.orderId;
 }
 
+exports.getOrderLinkById = async (req, res, next) => {
+    const orderId = req.params.orderId;
+}
+
 exports.updateOrderById = async (req, res, next) => {
     const orderId = req.params.orderId;
 }

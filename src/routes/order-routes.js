@@ -4,7 +4,8 @@ const orderController = require('../controllers/order-controller')
 
 const router = express.Router();
 
-// /api/orders
+// /api/order
+router.get('', orderController.getOrders);
 router.post('', orderController.createOrder);
 router.get('/:orderId', orderController.getOrderById);
 router.get('/:orderId/link', orderController.getOrderLinkById);

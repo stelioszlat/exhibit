@@ -7,6 +7,7 @@ const exhibitSchema = mongoose.Schema({
     image: {type: String},
     sound: {type: String},
     arrived: {type: Date},
+    category: {type: mongoose.Types.ObjectId, ref: 'Category'},
     creator: {type: mongoose.Types.ObjectId, ref: 'User'},
     value: {type: Number}
 }, {collection: 'exhibits', timestamps: true});

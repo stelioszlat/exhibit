@@ -7,9 +7,6 @@ const catalogSchema = mongoose.Schema({
     categories: [
         { type: mongoose.Types.ObjectId, ref: 'Category'}
     ],
-    items: [
-        { type: mongoose.Types.ObjectId, ref: 'Exhibit'}
-    ],
     tokens: [
         { type: String }
     ]

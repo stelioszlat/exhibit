@@ -27,40 +27,43 @@ exports.getCatalogs = async (req, res, next) => {
     }
 }
 
-exports.getGatalogByToken = async (req, res, next) => {
-    const token = req.params.token;
+exports.getCatalogById = async (req, res, next) => {
+    const catalogId = req.params.catalogId;
 
     try {
-        const catalog = await Catalog.findOne({
-            token: token
+        const catalog = await Catalog.findById(catalogId).populate({
+            path: 'categories',
+            populate: { path: 'exhibits' }
         });
 
-        if (!catalog) {
-            return res.status(404).json({ message: 'Could not find catalog' });
-        }
+        const token = catalog.tokens.find(token => token === req.query.token);
 
         return res.status(200).json({ catalog });
+
     } catch (err) {
-        return next(err);
+        console.log(err);
     }
 }
 
 exports.getCatalogsByVendor = async (req, res, next) => {
-    const vendorId = req.params.vid;
+    const vendorId = req.params.vendorId;
 
     try {
         const vendor = await Vendor.findById(vendorId);
-
+        
         if (!vendor) {
-            return res.status(404).json({ message: 'Could not find vendor' });
+            return res.status(404).json({ message: 'Could not find vendor'});
         }
-
+        
         const catalogs = await Catalog.find({
-            vendor: vendor.name 
+            vendor: vendor._id
+        }).populate({
+            path: 'categories',
+            populate: { path: 'exhibits' }
         });
 
         if (!catalogs) {
-            return res.status(404).json({ message: 'Could not find catalogs for vendor' });
+            return res.status(404).json({ message: 'Could not find catalogs' });
         }
 
         return res.status(200).json({ catalogs });

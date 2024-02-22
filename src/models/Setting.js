@@ -7,7 +7,7 @@ exports.SettingType = {
 }
 
 const settingSchema = mongoose.Schema({
-    user: { type: string},
+    user: { type: mongoose.Types.ObjectId, ref: 'User'},
     settingType: { type: string},
     settingValue: { type: string}
 }, {collection: 'settings',

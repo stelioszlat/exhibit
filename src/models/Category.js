@@ -4,6 +4,7 @@ const categorySchema = mongoose.Schema({
     name: {type: String},
     displayName: {type: String},
     description: {type: String},
+    catalog: {type: mongoose.Types.ObjectId, ref: 'Catalog'},
     exhibits: [
         {type: mongoose.Types.ObjectId, ref: 'Exhibit'}
     ]

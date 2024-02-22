@@ -36,17 +36,22 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use(cors());
 app.use('/api/auth', authRoutes);
-app.use('/api/catalogs', catalogRoutes);
-app.use('/api/exhibits', exhibitRoutes);
+app.use('/api/catalog', catalogRoutes);
+app.use('/api/exhibit', exhibitRoutes);
 app.use('/api/order', orderRoutes);
-app.use('/api/categories', categoryRoutes);
-app.use('/api/vendors', vendorRoutes);
-app.use('/api/users', userRoutes);             // requires authentication
+app.use('/api/category', categoryRoutes);
+app.use('/api/vendor', vendorRoutes);
+app.use('/api/user', userRoutes);             // requires authentication
 app.use('/api-docs', swagger.serve, swagger.setup(swaggerConfig));
 app.use(error.errorHandler);
 
 connect(process.env.DB_HOST);
-app.listen(port, host, () => {
+const server = app.listen(port, host, () => {
     console.log(`Server started at http://${host}:${port}`);
+});
+
+const io = require('socket.io')(server);
+io.on('connection', socket => {
+    console.log('Client connected');
 });
 

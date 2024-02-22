@@ -16,7 +16,7 @@ exports.getExhibits = async (req, res, next) => {
 
         const exhibits = await Exhibit.find()
             .skip((page - 1) * ITEMS_PER_PAGE)
-            .limig(ITEMS_PER_PAGE);
+            .limit(ITEMS_PER_PAGE);
         
         return res.status(200).json({
             exhibits,

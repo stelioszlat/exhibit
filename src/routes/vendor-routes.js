@@ -3,11 +3,11 @@ const router = express.Router();
 
 const vendorController = require('../controllers/vendor-controller');
 
-// /api/vendors
+// /api/vendor
 router.get('', vendorController.getVendors);
 router.post('', vendorController.createVendor);
-router.get('/vendor/:vid', vendorController.getVendorById);
-router.put('/vendor/:vid', vendorController.updateVendorById);
-router.delete('/vendor/:vid', vendorController.deleteVendorById);
+router.get('/:vid', vendorController.getVendorById);
+router.put('/:vid', vendorController.updateVendorById);
+router.delete('/:vid', vendorController.deleteVendorById);
 
 module.exports = router;

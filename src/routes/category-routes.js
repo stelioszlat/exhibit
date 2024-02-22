@@ -4,7 +4,7 @@ const categoryController = require('../controllers/category-controller');
 
 const router = express.Router();
 
-// /api/categories
+// /api/category
 router.get('', categoryController.getCategories);
 router.post('', categoryController.createCategory);
 router.get('/:categoryId', categoryController.getCategoryById);

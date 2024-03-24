@@ -15,7 +15,8 @@ exports.getCatalogs = async (req, res, next) => {
 
         const catalogs = await Catalog.find()
             .skip((page - 1) * CATALOGS_PER_PAGE)
-            .limit(CATALOGS_PER_PAGE);
+            .limit(CATALOGS_PER_PAGE)
+            .populate('categories');
     
         return res.status(200).json({
             catalogs,

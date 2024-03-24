@@ -63,7 +63,7 @@
     },
     "security": [ { "Bearer": [] } ],
     "paths": {
-        "/catalogs": {
+        "/catalog": {
             "get": {
                 "summary": "Retrieve all catalogs",
                 "tags": ["Admin", "Catalog"],
@@ -104,7 +104,7 @@
                 }
             }
         },
-        "/catalogs/vendor/{vendorId}": {
+        "/catalog/vendor/{vendorId}": {
             "get": {
                 "summary": "Retrieve all catalogs of a vendor",
                 "tags": ["Self", "Catalog"],
@@ -130,7 +130,7 @@
                 }
             }
         },
-        "/catalogs/{categoryId}": {
+        "/catalog/{categoryId}": {
             "get": {
                 "summary": "Retrieve a catalog",
                 "tags": ["Self", "Catalog"],
@@ -153,7 +153,7 @@
                 }
             }
         },
-        "/catalogs/{catalogId}": {
+        "/catalog/{catalogId}": {
             "update": {
                 "summary": "Update a catalog by id",
                 "tags": ["Self", "Admin", "Catalog"],

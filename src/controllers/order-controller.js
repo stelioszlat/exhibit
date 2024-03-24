@@ -1,4 +1,7 @@
 const Order = require('../models/Order');
+const Vendor = require('../models/Vendor');
+const Catalog = require('../models/Catalog');
+const mongoose = require('mongoose');
 
 const ORDERS_PER_PAGE = 10;
 
@@ -24,7 +27,46 @@ exports.getOrders = async (req, res, next) => {
 }
 
 exports.createOrder = async (req, res, next) => {
-    
+    const { vendor, catalog, creator, items } = req.body;
+
+    try {
+
+        const orderVendor = await Vendor.findOne({
+            name: vendor 
+        });
+
+        if (!orderVendor) {
+            return res.status(409).json({ message: 'Could not find a vendor for this order' });
+        }
+
+        const orderCatalog = await Catalog.findOne({
+            name: catalog
+        });
+
+        if (!orderCatalog) {
+            return res.status(409).json({ message: 'Could not find a catalog for this order' });
+        }
+
+        items.forEach(item => {
+            if (!mongoose.Types.ObjectId.isValid(item._id)) {
+                return res.status(409).json({ message: 'Could not find items' });
+            }
+        })
+        const newOrder = await Order.create({
+            vendor: mongoose.Types.ObjectId(orderVendor._id),
+            catalog: mongoose.Types.ObjectId(orderCatalog._id), 
+            creator: creator,
+            items: items.map(item => { return { _id: mongoose.Types.ObjectId(item._id), orderQuantity: item.orderQuantity }}),
+        });
+
+        if (!newOrder) {
+            return res.status(400).res({ message: 'Could not place order'});
+        }
+
+        res.status(201).json({ order: newOrder });
+    } catch (err) {
+        return next(err);
+    }
 }
 
 exports.getOrderById = async (req, res, next) => {

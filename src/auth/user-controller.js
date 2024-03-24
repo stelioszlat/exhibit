@@ -1,5 +1,9 @@
 const User = require('../models/User');
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+
+const secret = process.env.SECRET;
 
 exports.getUsers = async (req, res, next) => {
     // get all users
@@ -19,7 +23,7 @@ exports.getUsers = async (req, res, next) => {
 };
 
 exports.createUser = async (req, res, next) => {
-    const { email, username, isAdmin, password, rePassword } = req.body;
+    const { email, username, isAdmin, isSuperAdmin, password, rePassword } = req.body;
 
     if (!email) {
         return res.status(409).json({ message: 'You need to enter email'});
@@ -56,14 +60,17 @@ exports.createUser = async (req, res, next) => {
             username: username,
             password: password,
             active: true,
-            isAdmin: isAdmin
-        }, secret);
+            isAdmin: isAdmin,
+            isSuperAdmin: isSuperAdmin,
+        }, secret, {expiresIn: '1m'});
 
         const hashedPassword = await bcrypt.hash(password, 12);
         const user = new User({
             username: username,
             email: email,
             active: true,
+            isAdmin: isAdmin,
+            isSuperAdmin: isSuperAdmin,
             apiToken: apiToken,
             password: hashedPassword,
         });
@@ -89,16 +96,35 @@ exports.getUserById = async (req, res, next) => {
         const user = await User.findById(userId);
 
         if (!user) {
-            res.status(404).json({ message: 'User does not exist' });
+            return res.status(404).json({ message: 'User does not exist' });
         }
 
-        res.status(200).json({user});
+        let {username, email, isAdmin, isSuperAdmin, active, apiToken} = user;
+        res.status(200).json({username, email, isAdmin, isSuperAdmin, active, apiToken});
     
     } catch (err) {
         console.log(err);
         return next(err);
     }
 };
+
+exports.getUserTokensById = async (req, res, next) => {
+    const userId = req.params.uid;
+
+    try {
+        
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ message: 'User does not exist' });
+        }
+
+        res.status(200).json([user.apiToken]);
+    } catch (err) {
+        console.log(err);
+        return next(err);
+    }
+}
 
 exports.updateUserById = async (req, res, next) => {
     const userId = req.params.uid;

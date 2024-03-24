@@ -8,6 +8,7 @@ const { authenticate, isAdmin, isSelf, isSelfOrAdmin, userExists } = require('..
 router.get('', userController.getUsers);
 router.post('', userExists, userController.createUser);
 router.get('/:uid', userController.getUserById);
+router.get('/:uid/tokens', userController.getUserTokensById);
 router.put('/:uid', userController.updateUserById);
 router.delete('/:uid', userController.deleteUserById);
 

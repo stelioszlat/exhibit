@@ -23,6 +23,7 @@ const exhibitRoutes = require('./src/routes/exhibit-routes');
 const orderRoutes = require('./src/routes/order-routes');
 const categoryRoutes = require('./src/routes/category-routes');
 const vendorRoutes = require('./src/routes/vendor-routes');
+const settingRoutes = require('./src/routes/setting-routes');
 const userRoutes = require('./src/routes/user-routes');
 
 const app = express();
@@ -41,6 +42,7 @@ app.use('/api/exhibit', exhibitRoutes);
 app.use('/api/order', orderRoutes);
 app.use('/api/category', categoryRoutes);
 app.use('/api/vendor', vendorRoutes);
+app.use('/api/setting', settingRoutes);
 app.use('/api/user', userRoutes);             // requires authentication
 app.use('/api-docs', swagger.serve, swagger.setup(swaggerConfig));
 app.use(error.errorHandler);

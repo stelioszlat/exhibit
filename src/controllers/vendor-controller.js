@@ -22,6 +22,12 @@ exports.getVendors = async (req, res, next) => {
     }
 }
 
+exports.searchVendor = async (req, res, next) => {
+    const vendor = req.query.query;
+    console.log(vendor);
+    return res.status(200).json({ message: "Vendor found" });
+}
+
 exports.createVendor = async (req, res, next) => {
     const vendor = req.body;
 

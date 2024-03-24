@@ -3,6 +3,21 @@ const Setting = require('../models/Setting');
 const User = require('../models/User');
 const mongoose = require('mongoose');
 
+exports.getSettings = async (req, res, next) => {
+    try {
+        const settings = await Setting.find({
+            username: 'superadmin',
+        });
+
+        if (!settings) {
+            return res.status(404).json({ message: 'Could not find any settings' });
+        }
+
+        res.status(200).json({ settings });
+    } catch (err) {
+        return next(err);
+    }
+}
 
 exports.getSettingsByUser = async (req, res, next) => {
     const userId = req.params.userId;
@@ -28,7 +43,28 @@ exports.getSettingsByUser = async (req, res, next) => {
     }
 }
 
-exports.createSettingForUser = async (req, res, next) => {
+exports.updateSetting = async (req, res, next) => {
+    const setting = req.body;
+
+    try {
+
+        const updatedSetting = await Setting.updateOne({
+            settingType: setting.settingType,
+        }, {
+            settingValue: setting.settingValue
+        });
+
+        if (!updatedSetting) {
+            return res.status(400).json({ message: 'Could not create setting for user ' + user.name });
+        }
+
+        res.status(200).json({ setting: updatedSetting });
+    } catch (err) {
+        return next(err);
+    }
+}
+
+exports.updateSettingForUser = async (req, res, next) => {
     const userId = req.params.userId;
     const setting = req.body;
 
@@ -39,8 +75,7 @@ exports.createSettingForUser = async (req, res, next) => {
             return res.status(404).json({ message: 'Could not find user with id: ' + userId });
         }
 
-        const newSetting = await Setting.create({
-            user: user.name,
+        const newSetting = await Setting.updateOne({
             settingType: setting.settingType,
             settingValue: setting.settingValue,
         });

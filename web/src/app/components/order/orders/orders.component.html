@@ -1,0 +1,6 @@
+<button routerLink="/admin/order/new" mat-button color="primary">New Order</button>
+<div *ngFor="let order of orders">
+    <order [order]="order"></order>
+</div>
+<router-outlet></router-outlet>
+

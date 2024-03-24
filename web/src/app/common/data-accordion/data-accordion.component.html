@@ -1,0 +1,12 @@
+<mat-accordion>
+    <mat-expansion-panel hideToggle *ngFor="let d of data">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                {{ d.displayName }}
+            </mat-panel-title>
+            <mat-panel-description>
+                {{ d.description }}
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+    </mat-expansion-panel>
+</mat-accordion>

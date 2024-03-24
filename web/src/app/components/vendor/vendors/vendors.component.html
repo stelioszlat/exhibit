@@ -1,0 +1,6 @@
+<button routerLink="/admin/vendor/new" mat-button color="primary">New Vendor</button>
+<div *ngFor="let vendor of vendors">
+    <vendor [vendor]="vendor"></vendor>
+</div>
+<router-outlet></router-outlet>
+

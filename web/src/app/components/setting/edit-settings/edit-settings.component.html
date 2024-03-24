@@ -1,0 +1,24 @@
+<form [formGroup]="newSettingForm" class="form">
+    <mat-form-field>
+        <mat-label>Setting</mat-label>
+        <input type="text"
+            placeholder="Type"
+            aria-label="Type"
+            matInput
+            formControlName="settingType"
+            [matAutocomplete]="autoSettingType">
+        <mat-autocomplete #autoSettingType="matAutocomplete" (optionSelected)="selectSettingType($event)">
+            <mat-option *ngFor="let setting of settings" [value]="setting.settingType">
+                {{ setting.settingType }}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field>
+        <input type="text"
+        placeholder="Value"
+        aria-label="Value"
+        matInput
+        formControlName="settingValue">
+    </mat-form-field>
+    <button mat-raised-button color="primary" routerLink="/admin/settings" (click)="updateSetting($event)">Update Setting</button>
+</form>

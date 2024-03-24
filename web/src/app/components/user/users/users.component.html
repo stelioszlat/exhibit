@@ -1,0 +1,5 @@
+<button routerLink="/admin/user/new" mat-button color="primary">New User</button>
+<div *ngFor="let user of users | async ">
+    <user [user]="user"></user>
+</div>
+<router-outlet></router-outlet>

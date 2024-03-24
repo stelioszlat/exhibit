@@ -1,0 +1,10 @@
+<div>
+    <mat-label>Name: {{ exhibit.name }}</mat-label><br/>
+    <mat-label>Display Name: {{ exhibit.displayName }}</mat-label><br/>
+    <mat-label>Arrived at: {{ exhibit.arrived | date: 'short' }}</mat-label><br/>
+    <mat-label>Description: {{ exhibit.creator }}</mat-label><br/>
+    <mat-label>Creator: {{ exhibit.creator }}</mat-label><br/>
+    <mat-label>Value: {{ exhibit.value }}</mat-label><br/>
+    <button  mat-button [routerLink]="'../exhibit/' + exhibit._id + '/edit'">Edit Exhibit</button>
+    <mat-divider></mat-divider>
+</div>

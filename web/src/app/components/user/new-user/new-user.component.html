@@ -1,0 +1,30 @@
+<button routerLink="/admin/users" mat-button color="primary">Back</button>
+<div class="form">
+    <form [formGroup]="newUserForm">
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="text">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Username</mat-label>
+            <input matInput formControlName="username" type="text">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" type="password">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Confirm Password</mat-label>
+            <input matInput formControlName="rePassword" type="password">
+        </mat-form-field>
+        <mat-label>Admin
+            <mat-slide-toggle color="primary" formControlName="isAdmin"></mat-slide-toggle>
+        </mat-label>
+        <mat-label>Super Admin
+            <mat-slide-toggle color="primary" formControlName="isSuperAdmin"></mat-slide-toggle>
+        </mat-label>
+        <button mat-raised-button color="primary" [disabled]="!newUserForm.valid" (click)="createUser()">Create User</button>
+        <p>{{ message }}</p>
+    </form>
+</div>
+

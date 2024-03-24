@@ -1,0 +1,15 @@
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.action-buttons button {
+    height: fit-content;
+    margin: 5px;
+}
+
+.quantity {
+    display: flex;
+    justify-content: flex-end;
+    margin-left: 10px;
+}

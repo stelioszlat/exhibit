@@ -1,0 +1,21 @@
+<form [formGroup]="registerForm" class="form">
+    <h1>Exhibit</h1>
+    <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="text">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" type="text">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" type="password">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Verify password</mat-label>
+        <input matInput formControlName="rePassword" type="password">
+    </mat-form-field>
+    <button mat-button color="primary" routerLink="/login">Back to Login</button>
+    <button mat-raised-button color="primary" [disabled]="!registerForm.valid" (click)="register()">Register</button>
+</form>

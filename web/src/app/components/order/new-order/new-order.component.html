@@ -1,0 +1,54 @@
+<button routerLink="/admin/orders" mat-button color="primary">Back</button>
+
+<div class="form">
+    <form [formGroup]="newOrderForm">
+        <mat-form-field>
+            <mat-label>Vendor</mat-label>
+            <input type="text"
+                placeholder="Vendor"
+                aria-label="Vendor"
+                matInput
+                formControlName="vendor"
+                [matAutocomplete]="autoVendor">
+            <mat-autocomplete #autoVendor="matAutocomplete" (optionSelected)="selectVendor($event)">
+                <mat-option *ngFor="let vendor of vendors" [value]="vendor.name">
+                    {{ vendor.name }}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Catalog</mat-label>
+            <input type="text"
+                placeholder="Catalog"
+                aria-label="Catalog"
+                matInput
+                formControlName="catalog"
+                [matAutocomplete]="autoCatalog">
+            <mat-autocomplete #autoCatalog="matAutocomplete" (optionSelected)="selectCatalog($event)">
+                <mat-option *ngFor="let catalog of catalogs" [value]="catalog.name">
+                    {{ catalog.name }}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        <div class="categories-container">
+            <mat-accordion>
+                <mat-expansion-panel hideToggle *ngFor="let category of categories">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{ category.displayName }}
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            {{ category.description }}
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <mat-list>
+                        <mat-list-item *ngFor="let exhibit of category.exhibits">
+                            <cart-item [item]="exhibit"></cart-item>
+                        </mat-list-item>
+                    </mat-list>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+        <button mat-raised-button color="primary" [disabled]="!this.newOrderForm.valid  && this.cartItems.length == 0" routerLink="/admin/orders" (click)="saveOrder($event)">Save Order</button>
+    </form>
+</div>

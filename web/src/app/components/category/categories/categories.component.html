@@ -1,0 +1,6 @@
+<button routerLink="/admin/category/new" mat-button color="primary">New Category</button>
+<div *ngFor="let category of categories">
+    <category [category]="category"></category>
+</div>
+<router-outlet></router-outlet>
+

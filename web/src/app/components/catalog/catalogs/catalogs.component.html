@@ -1,0 +1,6 @@
+<button routerLink="/admin/catalog/new" mat-button color="primary">New Catalog</button>
+<div *ngFor="let catalog of catalogs">
+    <catalog [catalog]="catalog"></catalog>
+</div>
+
+<router-outlet></router-outlet>

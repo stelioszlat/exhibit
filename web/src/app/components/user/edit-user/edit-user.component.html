@@ -1,0 +1,38 @@
+<button mat-button color="primary" routerLink="/admin/users">Back</button>
+<div class="form">
+    <form [formGroup]="editUserForm">
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="text">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Username</mat-label>
+            <input matInput formControlName="username" type="text">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" type="password">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Confirm Password</mat-label>
+            <input matInput formControlName="rePassword" type="password">
+        </mat-form-field>
+        <mat-list-item>
+            <mat-label>Admin
+                <mat-slide-toggle color="primary" formControlName="isAdmin"></mat-slide-toggle>
+            </mat-label>
+        </mat-list-item>
+        <mat-list-item>
+            <mat-label>Super Admin
+                <mat-slide-toggle color="primary" formControlName="isSuperAdmin"></mat-slide-toggle>
+            </mat-label>
+        </mat-list-item>
+        <mat-list-item>    
+            <mat-label>API Token
+                <mat-slide-toggle color="primary" (toggleChange)="checkToken = !checkToken"></mat-slide-toggle>
+                <input matInput formControlName="apiToken" type="password" [type]="checkToken ? 'text' : 'password'" readonly>
+            </mat-label>
+        </mat-list-item>
+        <button mat-raised-button color="primary" [disabled]="!editUserForm.valid" (click)="updateUser()">Update User</button>
+    </form>
+</div>

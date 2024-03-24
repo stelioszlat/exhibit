@@ -1,0 +1,46 @@
+<button routerLink="/admin/catalogs" mat-button color="primary">Back</button>
+<div>
+    <form [formGroup]="newCatalogForm">
+        <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" type="text">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Vendor</mat-label>
+            <input type="text"
+                placeholder="Vendor"
+                aria-label="Vendor"
+                matInput
+                formControlName="vendor"
+                [matAutocomplete]="autoVendor"
+                (input)="searchVendor($event)">
+            <mat-autocomplete #autoVendor="matAutocomplete" (optionSelected)="selectVendor($event)">
+                <mat-option *ngFor="let vendor of vendors" [value]="vendor.name">
+                    {{ vendor.name }}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        <button mat-raised-button color="secondary" (click)="newCategory()">{{ addCategory ? 'Clear' : 'Add Category'}}</button>
+        <mat-form-field *ngIf="addCategory">
+            <mat-label>Category</mat-label>
+            <input type="text"
+                placeholder="Category"
+                aria-label="Category"
+                matInput
+                formControlName="category"
+                [matAutocomplete]="autoCategory"
+                (input)="searchVendor($event)">
+            <mat-autocomplete #autoCategory="matAutocomplete" (optionSelected)="selectVendor($event)">
+                <mat-option *ngFor="let vendor of vendors" [value]="vendor.name">
+                    {{ vendor.name }}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+        <button *ngIf="addCategory" mat-raised-button color="secondary" (click)="addNewCategory()">Add</button>
+        <button mat-raised-button color="primary" [disabled]="!newCatalogForm.valid" (click)="createCatalog()">Create Catalog</button>
+        <div *ngIf="categories.length !== 0">
+            <h2>Categories</h2>
+            <p *ngFor="let category of categories">{{ category.displayName }}</p>
+        </div>
+    </form>
+</div>

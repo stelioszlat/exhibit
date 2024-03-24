@@ -1,0 +1,17 @@
+<div>
+    <mat-label>Name: {{ vendor.name }}</mat-label><br/>
+    <mat-label>Address: {{ vendor.street }}, {{ vendor.zip }}, {{ vendor.city }}, {{vendor.country}}</mat-label><br/>
+    <mat-label *ngFor="let phone of vendor.phones">
+        Phone: {{ phone }}
+    </mat-label><br/>
+    <mat-label *ngFor="let catalog of vendor.catalogs">
+        <!-- <category [category]="category"></category> -->
+    </mat-label><br/>
+    <mat-label>Open From: {{ vendor.openHour | date: 'short' }}</mat-label><br/>
+    <mat-label>Open Until: {{ vendor.closeHour | date: 'short' }}</mat-label><br/>
+    <mat-label *ngFor="let openDay of vendor.daysOpen">
+        Open: {{ openDay }}
+    </mat-label><br/>
+    <button mat-button color="primary" [routerLink]="'../vendor/' + vendor.name + '/edit'">Edit</button>
+    <mat-divider></mat-divider>
+</div>

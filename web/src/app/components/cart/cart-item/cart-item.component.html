@@ -1,0 +1,13 @@
+<div class="cart-item">
+    <mat-label>{{ exhibit.displayName + ' x ' + totalItemQuantity }}</mat-label>
+    <div class="quantity">    
+        <mat-form-field>
+            <mat-label>Quantity</mat-label>
+            <input matInput [maxLength]="maxLength" [value]="itemQuantity" (input)="changeItemQuantity($event)">
+        </mat-form-field>
+        <div class="action-buttons">
+            <button mat-flat-button color="primary" (click)="onAddItemToCart($event)">Add</button>
+            <button mat-flat-button color="warn" *ngIf="isItemOnCart()" (click)="onRemoveItemFromCart($event)">Clear</button>
+        </div>
+    </div>
+</div>

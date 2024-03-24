@@ -1,0 +1,11 @@
+<button routerLink="/admin/catalogs" mat-button>Back</button>
+<div>
+    <form [formGroup]="editCatalogForm">
+        <label>Name</label>
+        <input formControlName="name" type="text">
+        <label>Vendor</label>
+        <input formControlName="vendor" type="text">
+        <button mat-button [disabled]="!editCatalogForm.valid" (click)="updateCatalog()">Create Catalog</button>
+    </form>
+</div>
+

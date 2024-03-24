@@ -1,0 +1,5 @@
+<button routerLink="/admin/exhibit/new" mat-button color="primary">New Exhibit</button>
+<div *ngFor="let exhibit of exhibits">
+    <exhibit [exhibit]="exhibit"></exhibit>
+</div>
+<router-outlet></router-outlet>

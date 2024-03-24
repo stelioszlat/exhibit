@@ -1,0 +1,5 @@
+<button mat-button color="primary" routerLink="/admin/setting/new">Edit Settings</button>
+<div *ngFor="let setting of settings">
+    <setting [setting]="setting"></setting>
+</div>
+<router-outlet></router-outlet>

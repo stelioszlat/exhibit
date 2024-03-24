@@ -1,0 +1,21 @@
+<button routerLink="/admin/exhibits">Back</button>
+<div>
+    <form [formGroup]="editExhibitForm">
+        <label>Name</label>
+        <input formControlName="name" type="text">
+        <label>Display Name</label>
+        <input formControlName="displayName" type="text">
+        <label>Description</label>
+        <input formControlName="description" type="text">
+        <label>Arrived</label>
+        <input formControlName="arrived" type="date">
+        <label>Value</label>
+        <input formControlName="value" type="text">
+        <label>Quantity</label>
+        <input formControlName="quantity" type="text">
+        <label>Location</label>
+        <input formControlName="location" type="text">
+        <button mat-button [disabled]="!editExhibitForm.dirty" (click)="updateExhibit()">Edit Exhibit</button>
+    </form>
+</div>
+

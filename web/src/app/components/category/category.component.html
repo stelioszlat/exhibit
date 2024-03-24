@@ -1,0 +1,7 @@
+<div>
+    <div>Name: {{ category.name }}</div>
+    <div>Display Name: {{ category.displayName }}</div>
+    <div>Description: {{ category.description }}</div>
+    <button mat-button [routerLink]="'../category/' + category._id + '/edit'">Edit Category</button>
+    <hr>
+</div>

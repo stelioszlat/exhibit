@@ -1,0 +1,10 @@
+<div>
+    <div>Email: {{ user.email }}</div>
+    <div>Username: {{ user.username }}</div>
+    <div>Administrator: {{ user.isAdmin ? 'Yes' : 'No' }}</div>
+    <div>System Administrator: {{ user.isSuperAdmin ? 'Yes' : 'No' }}</div>
+    <div>Active since: {{ user.createdAt | date : 'short' }}</div>
+    <button mat-button color="primary" [routerLink]="'../user/' + user._id + '/edit'">Edit</button>
+    <button mat-button color="warn" (click)="deleteUser()">Delete</button>
+    <hr>
+</div>
